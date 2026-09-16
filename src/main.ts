@@ -1,0 +1,36 @@
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
+import { ValidationPipe } from '@nestjs/common'; 
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+  app.useGlobalPipes(
+    new ValidationPipe({
+      // Remove a propriedade que não existe no DTO
+      whitelist: true,
+      // Retorna o erro quando uma propriedade desconhecida é enviada.
+      forbidNonWhitelisted: true,
+      // Tenta transformar os valores recebidos
+      // para os tipos esperados pela aplicação
+      transform: true
+    })
+  )
+
+  // Realizará de forma dinâmica, a criação da documentação para a nossa API
+  const config = new DocumentBuilder()
+  .setTitle('API Acolher Com Afeto') //Titulo do documento
+  .setDescription('API para gerenciamento do site') // Descrição
+  .setVersion('1.0') // Versão do documento
+  .build() //Comando para construção
+  const documento = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api_acolher-com-afeto', app, documento);
+
+  app.enableCors()
+  
+  // const port = process.env.PORT ?? 3000;
+  // await app.listen(port, '0.0.0.0');
+
+  await app.listen(process.env.PORT ?? 3000);
+}
+bootstrap();
