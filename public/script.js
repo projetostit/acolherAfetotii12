@@ -126,7 +126,7 @@ if (formulario) {
             try {
 
                 const resposta = await fetch(
-                    'http://localhost:3000/form-usuario',
+                    '/form-usuario',
                     {
                         method: 'POST',
 
@@ -365,7 +365,7 @@ if (professionalForm) {
 
                 // ENVIAR PARA NESTJS
                 const resposta = await fetch(
-                    'http://localhost:3000/form-profissional',
+                    '/form-profissional',
                     {
 
                         method: 'POST',
