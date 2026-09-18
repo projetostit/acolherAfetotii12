@@ -2080,6 +2080,57 @@ input:focus {
     flex-shrink: 0;
 }
 
+/* ENVIO DA MENSAGEM DE SUCESSO */
+.professional-success {
+    width: 100%;
+    padding: 40px 30px;
+    margin-top: 30px;
+
+    background: #effdf5;
+    border: 1px solid #b7efcc;
+    border-radius: 32px;
+
+    text-align: center;
+}
+
+.professional-success-icon {
+    width: 52px;
+    height: 52px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto 15px;
+
+    border: 4px solid #38a169;
+    border-radius: 50%;
+
+    color: #38a169;
+    font-size: 35px;
+}
+
+.professional-success h2 {
+    margin: 0 0 8px;
+
+    color: #2867c7;
+    font-size: 26px;
+    font-weight: 700;
+}
+
+.professional-success p {
+    margin: 0;
+
+    color: #4169a1;
+    font-size: 17px;
+    line-height: 1.6;
+}
+
+.professional-success p strong {
+    color: #38a169;
+    font-weight: 700;
+}
+
 /* ------ PÁGINA LOJA ------ */
 /* ------ PÁGINA CONTATO ------ */
 .section-contact{

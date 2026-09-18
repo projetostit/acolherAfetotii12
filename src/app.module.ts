@@ -5,6 +5,7 @@ import { join } from "path";
 
 import { DatabaseModule } from './database/database.module';
 import { FormUsuarioModule } from './form_usuario/form_usuario.module';
+import { FormProfissionalModule } from './form_profissional/form_profissional.module';
 
 
 @Module({
@@ -21,6 +22,7 @@ import { FormUsuarioModule } from './form_usuario/form_usuario.module';
         }),
         DatabaseModule,
         FormUsuarioModule,
+        FormProfissionalModule,
     ],
 
 })

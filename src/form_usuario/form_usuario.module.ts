@@ -4,7 +4,7 @@ import { FormUsuarioService } from './form_usuario.service';
 import { DatabaseModule } from 'src/database/database.module';
 
 @Module({
-  // Importamos o DatabaseService porque o livrosService precisará acessar o banco.
+  // Importamos o DatabaseService porque o FormUsuarioService precisará acessar o banco.
   imports: [DatabaseModule],
   controllers: [FormUsuarioController],
   providers: [FormUsuarioService]

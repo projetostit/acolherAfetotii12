@@ -13,6 +13,7 @@ const serve_static_1 = require("@nestjs/serve-static");
 const path_1 = require("path");
 const database_module_1 = require("./database/database.module");
 const form_usuario_module_1 = require("./form_usuario/form_usuario.module");
+const form_profissional_module_1 = require("./form_profissional/form_profissional.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -27,6 +28,7 @@ exports.AppModule = AppModule = __decorate([
             }),
             database_module_1.DatabaseModule,
             form_usuario_module_1.FormUsuarioModule,
+            form_profissional_module_1.FormProfissionalModule,
         ],
     })
 ], AppModule);

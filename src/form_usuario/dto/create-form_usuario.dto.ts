@@ -11,7 +11,7 @@ export class CreateFormularioUsuarioDto {
         example: 'João da Silva',
         description: 'Nome do usuário'
     })
-    nome: string;
+    nome!: string;
 
 
     @IsEmail() // Tem que ser um e-mail válido
@@ -21,7 +21,7 @@ export class CreateFormularioUsuarioDto {
         example: 'joao@email.com',
         description: 'E-mail do usuário'
     })
-    email: string;
+    email!: string;
 
 
     @IsString() // Tem que ser string
@@ -31,7 +31,7 @@ export class CreateFormularioUsuarioDto {
         example: '(11) 99999-9999',
         description: 'Telefone do usuário'
     })
-    telefone: string;
+    telefone!: string;
 
 
     @IsString() // Tem que ser string
@@ -41,5 +41,5 @@ export class CreateFormularioUsuarioDto {
         example: 'Gostaria de saber mais informações sobre os serviços.',
         description: 'Mensagem enviada pelo usuário'
     })
-    mensagem: string;
+    mensagem!: string;
 }

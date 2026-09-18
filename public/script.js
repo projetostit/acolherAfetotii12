@@ -84,113 +84,374 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-// ========================================
 // CONEXÃO COM A API - FORMULÁRIO CONTATO
-// ========================================
-
 const formulario = document.querySelector('#contact-form');
 
-const areaFormulario = document.querySelector('#contact-form-wrapper');
+const areaFormulario =
+    document.querySelector('#contact-form-wrapper');
 
-const mensagemSucesso = document.querySelector('#mensagem-sucesso');
+const mensagemSucesso =
+    document.querySelector('#mensagem-sucesso');
 
-const btnOutraMensagem = document.querySelector(
-    '#enviar-outra-mensagem'
-);
-
-
-formulario.addEventListener('submit', async (event) => {
-
-    event.preventDefault();
+const btnOutraMensagem =
+    document.querySelector('#enviar-outra-mensagem');
 
 
-    // Captura os dados do formulário
-    const dados = {
+// Só executa se o formulário existir na página
+if (formulario) {
 
-        nome: document.querySelector('#nome').value,
+    formulario.addEventListener(
+        'submit',
+        async (event) => {
 
-        email: document.querySelector('#email').value,
+            event.preventDefault();
 
-        telefone: document.querySelector('#telefone').value,
+            const dados = {
 
-        mensagem: document.querySelector('#mensagem').value
+                nome:
+                    document.querySelector('#nome').value,
 
-    };
+                email:
+                    document.querySelector('#email').value,
+
+                telefone:
+                    document.querySelector('#telefone').value,
+
+                mensagem:
+                    document.querySelector('#mensagem').value
+
+            };
 
 
-    try {
+            try {
 
-        const resposta = await fetch(
-            'http://localhost:3000/form-usuario',
-            {
-                method: 'POST',
+                const resposta = await fetch(
+                    'http://localhost:3000/form-usuario',
+                    {
+                        method: 'POST',
 
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
 
-                body: JSON.stringify(dados)
+                        body: JSON.stringify(dados)
+                    }
+                );
+
+
+                if (!resposta.ok) {
+
+                    const erro =
+                        await resposta.json();
+
+                    console.error(
+                        'Erro da API:',
+                        erro
+                    );
+
+                    alert(
+                        erro.message ||
+                        'Não foi possível enviar a mensagem.'
+                    );
+
+                    return;
+                }
+
+
+                const resultado =
+                    await resposta.json();
+
+                console.log(
+                    'Formulário cadastrado:',
+                    resultado
+                );
+
+
+                formulario.reset();
+
+
+                if (areaFormulario) {
+
+                    areaFormulario.style.display =
+                        'none';
+                }
+
+
+                if (mensagemSucesso) {
+
+                    mensagemSucesso.classList.add(
+                        'ativo'
+                    );
+                }
+
+            } catch (erro) {
+
+                console.error(
+                    'Erro:',
+                    erro
+                );
+
+                alert(
+                    'Erro ao conectar com o servidor.'
+                );
             }
-        );
 
-
-        // Verifica se ocorreu erro na API
-        if (!resposta.ok) {
-
-            const erro = await resposta.json();
-
-            console.error('Erro da API:', erro);
-
-            alert('Não foi possível enviar a mensagem.');
-
-            return;
         }
+    );
+}
 
-
-        // Converte a resposta
-        const resultado = await resposta.json();
-
-        console.log('Formulário cadastrado:', resultado);
-
-
-        // Limpa o formulário
-        formulario.reset();
-
-
-        // Esconde o formulário
-        areaFormulario.style.display = 'none';
-
-
-        // Mostra a mensagem de sucesso
-        mensagemSucesso.classList.add('ativo');
-
-
-    } catch (erro) {
-
-        console.error('Erro:', erro);
-
-        alert('Erro ao conectar com o servidor.');
-
-    }
-
-});
-
-
-// ========================================
 // ENVIAR OUTRA MENSAGEM
-// ========================================
 
-btnOutraMensagem.addEventListener('click', () => {
+if (btnOutraMensagem) {
 
-    // Esconde a mensagem
-    mensagemSucesso.classList.remove('ativo');
+    btnOutraMensagem.addEventListener(
+        'click',
+        () => {
+
+            if (mensagemSucesso) {
+
+                mensagemSucesso.classList.remove(
+                    'ativo'
+                );
+            }
 
 
-    // Mostra novamente o formulário
-    areaFormulario.style.display = 'block';
+            if (areaFormulario) {
+
+                areaFormulario.style.display =
+                    'block';
+            }
 
 
-    // Coloca o cursor no primeiro campo
-    document.querySelector('#nome').focus();
+            const campoNome =
+                document.querySelector('#nome');
 
-});
+            if (campoNome) {
+
+                campoNome.focus();
+            }
+
+        }
+    );
+}
+
+
+// CADASTRO DO PROFISSIONAL
+
+const professionalForm =
+    document.getElementById('professional-form');
+
+const professionalSuccess =
+    document.getElementById('professional-success');
+
+
+if (professionalForm) {
+
+    professionalForm.addEventListener(
+        'submit',
+        async (event) => {
+
+            event.preventDefault();
+
+
+            // PEGAR MODALIDADES SELECIONADAS
+            const modalidades = Array.from(
+                document.querySelectorAll(
+                    'input[name="modalidades"]:checked'
+                )
+            ).map(
+                checkbox => Number(checkbox.value)
+            );
+
+
+            // Pelo menos uma modalidade
+            if (modalidades.length === 0) {
+
+                alert(
+                    'Selecione pelo menos uma modalidade de atendimento.'
+                );
+
+                return;
+            }
+
+            // PEGAR VALOR DA CONSULTA
+            const valor =
+                document.getElementById('valor').value;
+
+
+            // MONTAR OBJETO PARA API
+            const dados = {
+
+                nome:
+                    document
+                        .getElementById('nome')
+                        .value
+                        .trim(),
+
+                sobrenome:
+                    document
+                        .getElementById('sobrenome')
+                        .value
+                        .trim(),
+
+                cpf:
+                    document
+                        .getElementById('cpf')
+                        .value
+                        .replace(/\D/g, ''),
+
+                telefone:
+                    document
+                        .getElementById('telefone')
+                        .value
+                        .trim(),
+
+                email:
+                    document
+                        .getElementById('email')
+                        .value
+                        .trim(),
+
+                especialidade_id:
+                    Number(
+                        document
+                            .getElementById('especialidade')
+                            .value
+                    ),
+
+                modalidades:
+                    modalidades,
+
+                registro_profissional:
+                    document
+                        .getElementById('registro')
+                        .value
+                        .trim(),
+
+                cidade:
+                    document
+                        .getElementById('cidade')
+                        .value
+                        .trim(),
+
+                estado:
+                    document
+                        .getElementById('estado')
+                        .value,
+
+                descricao:
+                    document
+                        .getElementById('descricao')
+                        .value
+                        .trim()
+            };
+
+
+            // VALOR É OPCIONAL
+            if (valor !== '') {
+
+                dados.valor_consulta =
+                    Number(valor);
+            }
+
+
+            console.log(
+                'Dados enviados:',
+                dados
+            );
+
+
+            try {
+
+                // ENVIAR PARA NESTJS
+                const resposta = await fetch(
+                    'http://localhost:3000/form-profissional',
+                    {
+
+                        method: 'POST',
+
+                        headers: {
+                            'Content-Type':
+                                'application/json'
+                        },
+
+                        body:
+                            JSON.stringify(dados)
+
+                    }
+                );
+
+
+                const resultado =
+                    await resposta.json();
+
+
+                console.log(
+                    'Status:',
+                    resposta.status
+                );
+
+                console.log(
+                    'Resposta:',
+                    resultado
+                );
+
+                // SE A API RETORNAR ERRO
+
+                if (!resposta.ok) {
+
+                    let mensagem =
+                        resultado.message;
+
+
+                    if (Array.isArray(mensagem)) {
+
+                        mensagem =
+                            mensagem.join('\n');
+                    }
+
+
+                    alert(
+                        mensagem ||
+                        'Erro ao enviar cadastro.'
+                    );
+
+                    return;
+                }
+
+
+                // CADASTRO REALIZADO
+
+                professionalForm.reset();
+
+                // Esconde formulário
+                professionalForm.style.display =
+                    'none';
+
+                // Mostra mensagem
+                professionalSuccess.style.display =
+                    'block';
+
+                professionalSuccess.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+
+            }
+
+            catch (erro) {
+
+                console.error(
+                    'Erro ao conectar com API:',
+                    erro
+                );
+
+
+                alert(
+                    'Não foi possível conectar com o servidor.'
+                );
+            }
+
+        }
+    );
+}

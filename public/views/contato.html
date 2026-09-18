@@ -66,7 +66,7 @@
         </div>
 
         <!-- Navegação do mobile -->
-         <nav class="mobile-nav" id="mobile-nav" aria-label="Menu mobile">
+        <nav class="mobile-nav" id="mobile-nav" aria-label="Menu mobile">
             <a href="../index.html" class="nav-link">Home</a>
             <a href="../views/sobreNos.html" class="nav-link">Sobre Nós</a>
             <a href="../views/familia.html" class="nav-link">Para Família</a>
@@ -169,8 +169,10 @@
                         Envie sua mensagem
                     </h3>
 
-                    <!-- Formulário -->
-                    <form class="contact-form" action="#" method="post" id="formulario">
+                    <!-- FORMULÁRIO -->
+                <div class="contact-form-wrapper" id="contact-form-wrapper">
+
+                    <form class="contact-form" action="#" method="post" id="contact-form">
 
                         <div class="contact-form-grid">
 
@@ -222,12 +224,37 @@
                         </div>
 
                     </form>
+
+                </div>
+
+            </div>
+
+            <!-- MENSAGEM DE SUCESSO -->
+            <div id="mensagem-sucesso" class="mensagem-sucesso">
+
+                <div class="sucesso-icone">
+                    ✓
+                </div>
+
+                <h3>Mensagem enviada!</h3>
+
+                <p>
+                    Agradecemos o seu contato. Nossa equipe responderá em breve.
+                </p>
+
+                <button type="button" id="enviar-outra-mensagem" class="btn-outra-mensagem">
+                    Enviar outra mensagem
+                </button>
+
+            </div>
+
+                    </form>
                 </div>
             </div>
         </section>
     </main>
 
-       <!-- FOOTER -->
+    <!-- FOOTER -->
     <footer class="footer" role="contentinfo">
         <div class="footer-container">
             <div class="footer-brand">
@@ -276,7 +303,7 @@
             <p>© Copyright <span id="year"></span> - Acolher com Afeto. Todos os direitos reservados.</p>
         </div>
     </footer>
-    
+
 </body>
 
 </html>

@@ -16,10 +16,29 @@ CREATE TABLE especialidade (
     nome VARCHAR(100) NOT NULL UNIQUE
 );
 
+USE acolher_com_afeto;
+
+INSERT INTO especialidade (nome) VALUES
+('Psicologia'),
+('Fonoaudiologia'),
+('Terapia Ocupacional'),
+('Psicopedagogia'),
+('Neurologia'),
+('Psiquiatria'),
+('Fisioterapia'),
+('Nutrição');
+
 CREATE TABLE modalidade (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(30) NOT NULL UNIQUE
 );
+
+
+INSERT INTO modalidade (nome) VALUES
+('Presencial'),
+('Online'),
+('Híbrido');
+
 
 CREATE TABLE cadastro_profissional (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -39,4 +58,21 @@ CREATE TABLE cadastro_profissional (
     CONSTRAINT fk_profissional_especialidade
         FOREIGN KEY (especialidade_id)
         REFERENCES especialidade(id)
+);
+
+
+CREATE TABLE profissional_modalidade (
+    profissional_id INT NOT NULL,
+    modalidade_id INT NOT NULL,
+
+    PRIMARY KEY (profissional_id, modalidade_id),
+
+    CONSTRAINT fk_profissional_modalidade_profissional
+        FOREIGN KEY (profissional_id)
+        REFERENCES cadastro_profissional(id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_profissional_modalidade_modalidade
+        FOREIGN KEY (modalidade_id)
+        REFERENCES modalidade(id)
 );
